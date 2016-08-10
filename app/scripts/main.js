@@ -1,6 +1,11 @@
 console.log('\'Allo \'Allo!');
 
+var dailyFortune;
+
+const fortuneButton = document.querySelector('button.fortune')
 const output        = document.querySelector('p.output')
+
+fortuneButton.addEventListener('click', () => showFortune(dailyFortune))
 
 /* Selecting a random fortune */
 function getRandomFortune(fortunes) {
@@ -8,9 +13,14 @@ function getRandomFortune(fortunes) {
   return randomValue
 }
 
+function showFortune(fortune) {
+  console.log(fortune)
+  output.textContent = fortune
+}
+
 function onFortunesReady(data) {
-  const randomFortune = getRandomFortune(data)
-  output.textContent = randomFortune
+  fortuneButton.removeAttribute('disabled')
+  dailyFortune = getRandomFortune(data)
 }
 
 
