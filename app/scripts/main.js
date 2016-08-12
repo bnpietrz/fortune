@@ -16,9 +16,9 @@ function showFortune(fortune) {
 function openCookie() {
   const svg = svgContainer.querySelector('#cookie')
   if (svg.classList) {
-    svg.classList.add("open");
+    svg.classList.add('open');
   } else {
-    svg.className += ' ' + "open";
+    svg.className += ' ' + 'open';
   }
 }
 
@@ -54,9 +54,9 @@ function onFortunesReady(data) {
 }
 
 function getFortunes() {
-  fetch("fortune.json").then(response => response.json())
+  fetch('fortune.json').then(response => response.json())
     .then(data => onFortunesReady(data))
-    .catch(error => console.log("promise error: " + error))
+    .catch(error => console.log('promise error: ' + error))
 }
 
 // console.log("fortune from local storage: " + localStorage.getItem('fortune'))
@@ -70,8 +70,8 @@ if (hasVisitedToday() && localStorage.getItem('fortune')) {
 }
 
 // get SVG illustration
-fetch("images/cookie.svg").then(response => response.text())
+fetch('images/cookie.svg').then(response => response.text())
   .then(data => {
     svgContainer.innerHTML = data
   })
-  .catch(error => console.log("promise error: " + error))
+  .catch(error => console.log('promise error: ' + error))

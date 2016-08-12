@@ -1,5 +1,6 @@
 // generated on 2016-08-08 using generator-webapp 2.1.0
 const gulp = require('gulp');
+const ghPages = require('gulp-gh-pages');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
 const del = require('del');
@@ -158,4 +159,9 @@ gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
 
 gulp.task('default', ['clean'], () => {
   gulp.start('build');
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
