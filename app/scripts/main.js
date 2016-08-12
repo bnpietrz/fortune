@@ -1,16 +1,25 @@
 var dailyFortune;
 
-const fortuneButton = document.querySelector('button.fortune')
-const output        = document.querySelector('p.output')
+const svgContainer  = document.querySelector('.svg-container')
 
-fortuneButton.addEventListener('click', () => clickHandler())
+
+svgContainer.addEventListener('click', () => clickHandler())
 
 function getRandomFortune(fortunes) {
   return fortunes[Math.floor(Math.random() * fortunes.length)]
 }
 
 function showFortune(fortune) {
-  output.textContent = fortune
+  svgContainer.querySelector('#paper-text tspan').textContent = fortune
+}
+
+function openCookie() {
+  const svg = svgContainer.querySelector('#cookie')
+  if (svg.classList) {
+    svg.classList.add("open");
+  } else {
+    svg.className += ' ' + "open";
+  }
 }
 
 function getDate() {
@@ -26,17 +35,21 @@ function hasVisitedToday() {
 }
 
 function clickHandler() {
+  if (svgContainer.hasAttribute('data-disabled')) {
+    return
+  }
   if (!hasVisitedToday()) {
-    // set cookie
+    // set localStorage
     localStorage.setItem('fortune', dailyFortune)
     localStorage.setItem('date', getDate())
   }
   // use fortune
   showFortune(dailyFortune)
+  openCookie()
 }
 
 function onFortunesReady(data) {
-  fortuneButton.removeAttribute('disabled')
+  svgContainer.removeAttribute('data-disabled')
   dailyFortune = getRandomFortune(data)
 }
 
@@ -50,10 +63,15 @@ function getFortunes() {
 // console.log("date from local storage: " + hasVisitedToday())
 
 if (hasVisitedToday() && localStorage.getItem('fortune')) {
-  console.log('use whats in local storage')
-  fortuneButton.removeAttribute('disabled')
+  svgContainer.removeAttribute('data-disabled')
   dailyFortune = localStorage.getItem('fortune')
 } else {
-  console.log('get new fortune')
   getFortunes()
 }
+
+// get SVG illustration
+fetch("images/cookie.svg").then(response => response.text())
+  .then(data => {
+    svgContainer.innerHTML = data
+  })
+  .catch(error => console.log("promise error: " + error))
