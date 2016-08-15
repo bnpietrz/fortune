@@ -1,3 +1,4 @@
+
 // generated on 2016-08-08 using generator-webapp 2.1.0
 const gulp = require('gulp');
 const ghPages = require('gulp-gh-pages');

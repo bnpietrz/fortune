@@ -13,8 +13,22 @@ function showFortune(fortune) {
   svgContainer.querySelector('#paper-text tspan').textContent = fortune
 }
 
+function rubberBand(elem, iterations) {
+        var keyframes = [
+          {transform: 'scale3d(1, 1, 1)', offset: 0},
+          {transform: 'scale3d(1.25, 0.75, 1)', offset: 0.3},
+          {transform: 'scale3d(0.75, 1.25, 1)', offset: 0.4},
+          {transform: 'scale3d(1.15, 0.85, 1)', offset: 0.5},
+          {transform: 'scale3d(.95, 1.05, 1)', offset: 0.65},
+          {transform: 'scale3d(1.05, .95, 1)', offset: 0.75},
+          {transform: 'scale3d(1, 1, 1)', offset: 1}];
+        var timing = {duration: 900, iterations: iterations};
+        return elem.animate(keyframes, timing);
+      }
+
 function openCookie() {
   const svg = svgContainer.querySelector('#cookie')
+  rubberBand(svg.querySelector('#group--paper'))
   if (svg.classList) {
     svg.classList.add('open');
   } else {
